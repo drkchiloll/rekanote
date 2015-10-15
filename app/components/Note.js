@@ -3,7 +3,7 @@ import React from 'react';
 export default class Note extends React.Component {
   render() {
     return (
-      <div> WebPack React BoilerPlate </div>
+      <div>{this.props.task}</div>
     );
   }
 }
