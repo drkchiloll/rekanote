@@ -8,8 +8,13 @@ var TARGET = process.env.npm_lifecycle_event,
     APP_PATH = path.resolve(ROOT_PATH, 'app'),
     BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
+process.env.BABEL_ENV = TARGET;
+
 var common = {
   entry : APP_PATH,
+  resolve : {
+    extensions : ['', '.js', '.jsx']
+  },
   output : {
     path : BUILD_PATH,
     filename : 'bundle.js'
@@ -25,6 +30,10 @@ var common = {
     loaders : [{
       test : /\.css$/,
       loaders : ['style','css'],
+      include : APP_PATH
+    }, {
+      test : /\.jsx?$/,
+      loaders : ['babel'],
       include : APP_PATH
     }]
   },
