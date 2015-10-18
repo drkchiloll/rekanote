@@ -20,7 +20,7 @@ class NoteStore {
     if(noteIndex < 0) {
       return;
     }
-    notes[nodeIndex].task = task;
+    notes[noteIndex].task = task;
     this.setState({notes});
   }
   delete(id) {
