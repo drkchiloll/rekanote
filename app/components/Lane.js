@@ -20,7 +20,14 @@ export default class Lane extends React.Component {
     LaneActions.attachToLane({laneId});
   }
   editName(id, name) {
-    console.log('edited lane name', id, name);
+    if(name) {
+      LaneActions.update({id, name});
+    } else {
+      LaneActions.delete(id);
+    }
+  }
+  editNote(id, task) {
+    NoteActions.update({id, task});
   }
   deleteNote(laneId, noteId) {
     LaneActions.detachFromLane({laneId, noteId});
@@ -45,7 +52,7 @@ export default class Lane extends React.Component {
           inject={{
             items: () => NoteStore.get(lane.notes || [])
           }}>
-            <Notes onEdit={this.editName} onDelete={this.deleteNote}/>
+            <Notes onEdit={this.editNote} onDelete={this.deleteNote}/>
         </AltContainer>
       </div>
     );
