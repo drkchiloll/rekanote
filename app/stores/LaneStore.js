@@ -17,6 +17,27 @@ class LaneStore {
 
     this.setState({ lanes : lanes.concat(lane) });
   }
+  update({id, name}) {
+    const lanes = this.lanes;
+    const targetId = this.findLane(id);
+
+    if(targetId < 0) {
+      return;
+    }
+    console.log(id);
+    lanes[targetId].name = name;
+    this.setState({lanes});
+  }
+  delete(id) {
+    const lanes = this.lanes;
+    const targetId = this.findLane(id);
+
+    if(targetId < 0) return;
+
+    this.setState({
+      lanes : lanes.slice(0, targetId).concat(lanes.slice(targetId + 1))
+    });
+  }
   findLane(id) {
     const lanes = this.lanes;
     const laneIndex = lanes.findIndex((lane) => lane.id === id);
@@ -49,7 +70,6 @@ class LaneStore {
     } else {
       console.warn('Already attached note to lane');
     }
-    this.findLane(laneId);
   }
   detachFromLane({laneId, noteId}) {
     const lanes = this.lanes;
@@ -69,7 +89,6 @@ class LaneStore {
     } else {
       console.warn('Failed to remove note from a lane as it did not exist', lanes);
     }
-    this.findLane(laneId);
   }
 }
 
