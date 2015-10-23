@@ -4,6 +4,7 @@ import Notes from './Notes';
 import NoteActions from '../actions/NoteActions';
 import NoteStore from '../stores/NoteStore';
 import LaneActions from '../actions/LaneActions';
+import Editable from './Editable';
 
 export default class Lane extends React.Component {
   constructor(props) {
@@ -12,13 +13,14 @@ export default class Lane extends React.Component {
     const id = props.lane.id;
     this.addNote = this.addNote.bind(this, id);
     this.deleteNote = this.deleteNote.bind(this, id);
+    this.editName = this.editName.bind(this, id);
   }
   addNote(laneId) {
     NoteActions.create({task: 'New Task'});
     LaneActions.attachToLane({laneId});
   }
-  editNote(id, task) {
-    NoteActions.update({id, task});
+  editName(id, name) {
+    console.log('edited lane name', id, name);
   }
   deleteNote(laneId, noteId) {
     LaneActions.detachFromLane({laneId, noteId});
@@ -30,7 +32,10 @@ export default class Lane extends React.Component {
     return (
       <div {...props}>
         <div className='lane-header'>
-          <div className='lane-name'>{lane.name}</div>
+          <Editable
+            className='lane-name'
+            onEdit={this.editName}
+            value={lane.name}/>
           <div className='lane-add-note'>
             <button onClick={this.addNote}>+</button>
           </div>
@@ -40,7 +45,7 @@ export default class Lane extends React.Component {
           inject={{
             items: () => NoteStore.get(lane.notes || [])
           }}>
-            <Notes onEdit={this.editNote} onDelete={this.deleteNote}/>
+            <Notes onEdit={this.editName} onDelete={this.deleteNote}/>
         </AltContainer>
       </div>
     );
