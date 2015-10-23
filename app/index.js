@@ -12,7 +12,7 @@ import persist from './libs/persist';
 main();
 
 function main() {
-  persist(alt, storage, app);
+  persist(alt, storage, 'app');
   const app = document.createElement('div');
   document.body.appendChild(app);
   ReactDOM.render(<App />, app);
